@@ -1,0 +1,56 @@
+<nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item><a routerLink="/admin/orders">订单管理</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>订单详情</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <h2 class="table-title">订单详情</h2>
+        <nz-card class="my-card">
+            <ng-template #title>
+                收货地址
+            </ng-template>
+            <ng-template #body>
+                <p>地址：{{address}}</p>
+                <p>联系人：{{name}}</p>
+                <p>手机：{{phone}}</p>
+            </ng-template>
+        </nz-card>
+        <nz-card class="my-card">
+            <ng-template #title>
+                订单{{sn}}
+            </ng-template>
+            <ng-template #body>
+                <div nz-row [nzGutter]="8" *ngFor="let product of orders">
+                    <div nz-col class="gutter-row" [nzSpan]="2">
+                        <img src="{{product.image}}" alt="" width="80" height="80">
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="18">
+                        {{product.name}}
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="2">
+                        <p style="text-align: right">x{{product.orderNum}}</p>
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="2">
+                        <p style="text-align: right">{{product.price * product.orderNum}}元</p>
+                    </div>
+                </div>
+                <p class="sum">{{sum}}元</p>
+            </ng-template>
+        </nz-card>
+        <div class="btn-box">
+            <button nz-button [nzType]="'default'" (click)="cannel()">
+                <span>取消</span>
+            </button>
+            <button nz-button [nzType]="'primary'" (click)="showModal()">
+                <span>确认发货</span>
+            </button>
+        </div>
+    </div>
+</nz-content>
+
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'确认收货'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <p>确认后，客户将收到发货通知，请先确认收款到帐号，及客户收货地址无误后再操作！</p>
+    </ng-template>
+</nz-modal>

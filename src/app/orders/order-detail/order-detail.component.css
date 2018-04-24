@@ -1,0 +1,17 @@
+.table-title{
+    margin-bottom: 15px;
+}
+.my-card{
+    margin-bottom: 15px;
+}
+.btn-box{
+    text-align: center;
+}
+
+.sum{
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    border-top: 1px #f2f2f2 solid;
+    padding: 15px 0;
+}

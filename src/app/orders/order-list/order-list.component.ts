@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Http} from '@angular/http';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-order-list',
@@ -11,7 +12,7 @@ export class OrderListComponent implements OnInit {
     nzPageIndex: Number = 1;
     nzTotal: Number = 0;
 
-    constructor(public http: Http) {
+    constructor(public http: Http, public router: Router) {
     }
 
     ngOnInit() {
@@ -42,6 +43,10 @@ export class OrderListComponent implements OnInit {
                     });
                 }
             });
+    }
+
+    open(id) {
+        this.router.navigateByUrl('/admin/order/' + id);
     }
 
 }

@@ -19,6 +19,7 @@ import {HttpModule} from '@angular/http';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -28,6 +29,7 @@ const routes: Routes = [
         {path: 'dashboard', component: HomeComponent},
         {path: 'products', component: ProductListComponent},
         {path: 'orders', component: OrderListComponent},
+        {path: 'order/:id', component: OrderDetailComponent},
         {path: 'users', component: UserListComponent},
         {path: 'product/:id', component: ProductFormComponent},
     ]},
@@ -45,7 +47,8 @@ const routes: Routes = [
         OrderListComponent,
         UserListComponent,
         HomeComponent,
-        ProductFormComponent
+        ProductFormComponent,
+        OrderDetailComponent
     ],
     imports: [
         BrowserModule,
