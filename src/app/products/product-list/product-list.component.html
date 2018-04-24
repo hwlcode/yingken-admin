@@ -1,0 +1,44 @@
+<nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>产品管理</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <h2 class="table-title">产品管理<button nz-button (click)="create()" [nzType]="'primary'" style="float: right;"><i class="anticon anticon-file-text"></i><span>新增</span></button></h2>
+        <nz-table #nzTable [nzAjaxData]="products"
+                  [nzTotal]="nzTotal"
+                  [(nzPageIndex)]="nzPageIndex"
+                  (nzPageIndexChange)="pageChange($even)"
+                  [nzPageSize]="10"
+                  (nzPageSizeChange)="pageChange($even)"
+        >
+            <thead nz-thead>
+            <tr>
+                <th nz-th width="50"><span>ID</span></th>
+                <th nz-th width="100"><span>图片</span></th>
+                <th nz-th><span>名称</span></th>
+                <th nz-th width="150"><span>单价</span></th>
+                <th nz-th width="180"><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+            <tr nz-tbody-tr *ngFor="let product of products; let i = index;">
+                <td nz-td>{{i+1}}</td>
+                <td nz-td><img src="{{'http://127.0.0.1:9527' + product.banner.path}}" alt="" width="60" height="60"></td>
+                <td nz-td>{{product.name}}</td>
+                <td nz-td>{{product.price}}元/斤</td>
+                <td nz-td>
+                    <button nz-button (click)="update(product)" [nzType]="'primary'"><i class="anticon anticon-file-text"></i><span>更新</span></button>
+                    <button nz-button (click)="showModal(product)" [nzType]="'primary'"><i class="anticon anticon-delete"></i><span>删除</span></button>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-content>
+
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'删除产品'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <p>确认删除该商品？</p>
+    </ng-template>
+</nz-modal>

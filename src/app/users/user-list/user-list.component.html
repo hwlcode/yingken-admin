@@ -1,0 +1,41 @@
+<nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>客户管理</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <h2 class="table-title">客户管理</h2>
+        <nz-table #nzTable [nzAjaxData]="users"
+                  [nzTotal]="nzTotal"
+                  [(nzPageIndex)]="nzPageIndex"
+                  (nzPageIndexChange)="pageChange($even)"
+                  [nzPageSize]="10"
+                  (nzPageSizeChange)="pageChange($even)"
+        >
+            <thead nz-thead>
+            <tr>
+                <th nz-th><span>ID</span></th>
+                <th nz-th><span>头像</span></th>
+                <th nz-th><span>名称</span></th>
+                <th nz-th><span>手机</span></th>
+                <th nz-th><span>性别</span></th>
+                <th nz-th><span>生日</span></th>
+                <th nz-th><span>住址</span></th>
+                <th nz-th><span>积分</span></th>
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+            <tr nz-tbody-tr *ngFor="let user of users; let i = index;">
+                <td nz-td>{{ i+1 }}</td>
+                <td nz-td><img src="{{'http://127.0.0.1:9527' + user.avatar}}" alt="" width="40" height="40"></td>
+                <td nz-td>{{user.name}}</td>
+                <td nz-td>{{user.phone}}</td>
+                <td nz-td>{{user.sex}}</td>
+                <td nz-td>{{user.birth}}</td>
+                <td nz-td>{{user.address}}</td>
+                <td nz-td>{{user.code}}分</td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-content>

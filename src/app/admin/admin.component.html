@@ -1,0 +1,13 @@
+<nz-layout class="layout">
+    <nz-header>
+        <div class="logo"><a routerLink="/admin/dashboard">盈垦后台管理</a></div>
+        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+            <li nz-menu-item><a routerLink="/admin/dashboard">工作台</a></li>
+            <li nz-menu-item><a routerLink="/admin/products">产品管理</a></li>
+            <li nz-menu-item><a routerLink="/admin/orders">订单管理</a></li>
+            <li nz-menu-item><a routerLink="/admin/users">客户管理</a></li>
+        </ul>
+    </nz-header>
+    <router-outlet></router-outlet>
+    <nz-footer style="text-align: center;">广西盈垦现代农业有限责任公司©2017～2018 版权所有</nz-footer>
+</nz-layout>

@@ -1,0 +1,36 @@
+<nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>订单管理</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <h2 class="table-title">订单管理</h2>
+        <nz-table #nzTable [nzAjaxData]="orderList"
+                  [nzTotal]="nzTotal"
+                  [(nzPageIndex)]="nzPageIndex"
+                  (nzPageIndexChange)="pageChange($even)"
+                  [nzPageSize]="10"
+                  (nzPageSizeChange)="pageChange($even)"
+        >
+            <thead nz-thead>
+            <tr>
+                <th nz-th><span>订单号</span></th>
+                <th nz-th><span>总价</span></th>
+                <th nz-th><span>状态</span></th>
+                <th nz-th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+            <tr nz-tbody-tr *ngFor="let order of orderList">
+                <td nz-td>{{order.sn}}</td>
+                <td nz-td>￥{{order.sumPrice}}元</td>
+                <td nz-td>{{ order.status == 1 ? '己付款,等待发货' : '己发货'}}</td>
+                <td nz-td>
+                    <button nz-button [nzType]="'primary'" [nzSize]="'small'" *ngIf="order.status == 1"
+                            (click)="open(order._id)"><span>发货</span></button>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-content>
