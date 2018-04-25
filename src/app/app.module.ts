@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/login', pathMatch: 'full'},
+    {path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'},
     {path: 'admin', redirectTo: '/admin/dashboard', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'admin', component: AdminComponent, children: [
