@@ -42,7 +42,7 @@ export class ProductFormComponent implements OnInit {
             res => {
                 if (id != 0) {
                     self.isSave = false;
-                    this.avatarUrl = 'http://127.0.0.1:9527' + (res.banner as any).path;
+                    this.avatarUrl = (res.banner as any).path;
                     this.avatarPath = (res.banner as any)._id;
                 }
 

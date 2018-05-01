@@ -17,6 +17,7 @@ export class OrderDetailComponent implements OnInit {
     address: string;
     phone: string;
     name: string;
+    hide: Boolean = false;
 
     isVisible = false;
 
@@ -37,6 +38,7 @@ export class OrderDetailComponent implements OnInit {
                     this.phone = this.customer.phone;
                     this.sn = res.data[0].sn;
                     this.sum = res.data[0].sumPrice;
+                    this.hide = res.data[0].type > 0 ? true : false;
                 }
             }
         );

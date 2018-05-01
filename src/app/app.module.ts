@@ -20,6 +20,7 @@ import { ProductFormComponent } from './products/product-form/product-form.compo
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 const routes: Routes = [
     {path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'},
@@ -60,7 +61,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         NgZorroAntdModule.forRoot()
     ],
-    providers: [],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy}],
     bootstrap: [AppComponent]
 })
 export class AppModule {

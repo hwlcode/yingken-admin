@@ -24,7 +24,7 @@
             <tbody nz-tbody>
             <tr nz-tbody-tr *ngFor="let product of products; let i = index;">
                 <td nz-td>{{i+1}}</td>
-                <td nz-td><img src="{{'http://127.0.0.1:9527' + product.banner.path}}" alt="" width="60" height="60"></td>
+                <td nz-td><img src="{{product.banner.path}}" alt="" width="60" height="60"></td>
                 <td nz-td>{{product.name}}</td>
                 <td nz-td>{{product.price}}元/斤</td>
                 <td nz-td>

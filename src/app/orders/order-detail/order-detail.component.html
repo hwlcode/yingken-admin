@@ -5,7 +5,9 @@
         <nz-breadcrumb-item>订单详情</nz-breadcrumb-item>
     </nz-breadcrumb>
     <div style="background:#fff; padding: 24px; min-height: 280px;">
-        <h2 class="table-title">订单详情</h2>
+        <h2 class="table-title">订单详情
+        <span style="float: right; color: orangered;">{{hide ? '积分兑换订单' : '普通订单'}}</span>
+        </h2>
         <nz-card class="my-card">
             <ng-template #title>
                 收货地址
