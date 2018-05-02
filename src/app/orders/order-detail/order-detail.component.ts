@@ -45,7 +45,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
     cannel() {
-        this.router.navigateByUrl('/admin/orders');
+        this.router.navigate(['/admin/orders']);
     }
 
     getOrderMsg(): Observable<any> {
@@ -60,7 +60,7 @@ export class OrderDetailComponent implements OnInit {
         this.http.get('/api/order/send/' + this.id).map(res => res.json()).subscribe(
             data => {
                 if (data.code === 0) {
-                    this.router.navigateByUrl('/admin/orders');
+                    this.router.navigate(['/admin/orders']);
                 }
             }
         )
