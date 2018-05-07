@@ -57,7 +57,7 @@ export class ProductListComponent implements OnInit {
         this.router.navigateByUrl('/admin/product/0');
     }
 
-    pageChange($even) {
+    pageChange($event) {
         this.getProducts(this.nzPageIndex).subscribe(res => {
             if (res.code === 0) {
                 this.products = res.data;

@@ -8,9 +8,9 @@
         <nz-table #nzTable [nzAjaxData]="products"
                   [nzTotal]="nzTotal"
                   [(nzPageIndex)]="nzPageIndex"
-                  (nzPageIndexChange)="pageChange($even)"
+                  (nzPageIndexChange)="pageChange($event)"
                   [nzPageSize]="10"
-                  (nzPageSizeChange)="pageChange($even)"
+                  (nzPageSizeChange)="pageChange($event)"
         >
             <thead nz-thead>
             <tr>

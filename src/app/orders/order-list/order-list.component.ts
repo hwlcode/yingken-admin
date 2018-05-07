@@ -31,7 +31,7 @@ export class OrderListComponent implements OnInit {
         return this.http.get('/api/order/list?q=' + page).map(res => res.json());
     }
 
-    pageChange($even) {
+    pageChange($event) {
         this.getOrderList(this.nzPageIndex).subscribe(
             data => {
                 if (data.code === 0) {
