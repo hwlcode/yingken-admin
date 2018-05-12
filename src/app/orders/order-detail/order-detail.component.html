@@ -44,11 +44,9 @@
             <button nz-button [nzType]="'default'" (click)="cannel()">
                 <span>取消</span>
             </button>
-            <div *ngFor="let product of orders">
-                <button nz-button [nzType]="'primary'" (click)="showModal()" *ngIf="product.status == 1">
-                    <span>确认发货</span>
-                </button>
-            </div>
+            <button nz-button [nzType]="'primary'" (click)="showModal()" *ngIf="orderStatus == 1">
+                <span>确认发货</span>
+            </button>
         </div>
     </div>
 </nz-content>

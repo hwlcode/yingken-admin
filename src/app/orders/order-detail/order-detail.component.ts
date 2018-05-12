@@ -21,6 +21,8 @@ export class OrderDetailComponent implements OnInit {
 
     isVisible = false;
 
+    orderStatus: number;
+
     constructor(public http: Http,
                 public router: Router,
                 public routeInfo: ActivatedRoute) {
@@ -32,6 +34,7 @@ export class OrderDetailComponent implements OnInit {
             res => {
                 if (res.code === 0) {
                     this.orders = JSON.parse(res.data[0].products);
+                    this.orderStatus = res.data[0].status;
                     this.customer = res.data[0].customer;
                     this.address = this.customer.address;
                     this.name = this.customer.name;
