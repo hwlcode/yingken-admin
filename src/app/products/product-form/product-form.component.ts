@@ -12,12 +12,13 @@ import {Observable} from 'rxjs/Observable';
 })
 export class ProductFormComponent implements OnInit {
     formModel: FormGroup;
+    unit = '/';
 
     loading = false;
     avatarUrl: string;
     avatarPath: string;
 
-    product: Product = new Product('', '', '', '', 0, ''); // 数据还没有回来之前给一个默认值
+    product: Product = new Product('', '', '', '', 0, '', ''); // 数据还没有回来之前给一个默认值
     isSave: Boolean = true;
 
     constructor(private msg: NzMessageService,
@@ -32,8 +33,9 @@ export class ProductFormComponent implements OnInit {
         this.formModel = fb.group({
             name: ['', [Validators.required, Validators.minLength(2)]],
             price: ['', [Validators.required]],
-            banner: ['', Validators.required],
-            code: [0, Validators.required],
+            banner: ['', [Validators.required]],
+            code: [0, [Validators.required]],
+            unit: ['', [Validators.required]],
             desc: ['']
         });
 
@@ -49,6 +51,7 @@ export class ProductFormComponent implements OnInit {
                 this.formModel.reset({
                     name: res.name,
                     price: res.price,
+                    unit: res.unit,
                     code: res.code,
                     banner: res.banner,
                     desc: res.desc
@@ -97,6 +100,7 @@ export class ProductFormComponent implements OnInit {
             name: this.formModel.value.name,
             price: this.formModel.value.price,
             code: this.formModel.value.code,
+            unit: this.formModel.value.unit,
             desc: this.formModel.value.desc
         });
         if (this.formModel.valid && this.formModel.value.banner !== null) {
@@ -118,6 +122,7 @@ export class ProductFormComponent implements OnInit {
             name: this.formModel.value.name,
             price: this.formModel.value.price,
             code: this.formModel.value.code,
+            unit: this.formModel.value.unit,
             desc: this.formModel.value.desc
         });
         if (this.formModel.valid && this.formModel.value.banner !== null) {
@@ -151,6 +156,7 @@ class Product {
                 public name: string,
                 public price: string,
                 public code: number,
+                public unit: string,
                 public desc: string) {
     }
 }

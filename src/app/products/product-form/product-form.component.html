@@ -20,10 +20,10 @@
                 <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
                     <label for="price" nz-form-item-required>产品价格</label>
                 </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                    <nz-input-number formControlName="price" [nzMin]="1" [nzMax]="10000" ></nz-input-number>
-                    <div nz-form-extra>给产品定一个好的价格.</div>
-                </div>
+                <nz-input-group [nzSize]="'large'" nzCompact>
+                    <input style="width: 10%;" nz-input formControlName="price" placeholder="价格">
+                    <input style="width: 5%;" nz-input formControlName="unit" placeholder="单位">
+                </nz-input-group>
             </div>
             <div nz-form-item nz-row>
                 <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">

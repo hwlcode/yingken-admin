@@ -26,7 +26,7 @@
                 <td nz-td>{{i+1}}</td>
                 <td nz-td><img src="{{product.banner.path}}" alt="" width="60" height="60"></td>
                 <td nz-td>{{product.name}}</td>
-                <td nz-td>{{product.price}}元/斤</td>
+                <td nz-td>{{product.price}}元/{{product.unit}}</td>
                 <td nz-td>
                     <button nz-button (click)="update(product)" [nzType]="'primary'"><i class="anticon anticon-file-text"></i><span>更新</span></button>
                     <button nz-button (click)="showModal(product)" [nzType]="'primary'"><i class="anticon anticon-delete"></i><span>删除</span></button>
