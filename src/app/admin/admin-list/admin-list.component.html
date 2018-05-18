@@ -1,0 +1,42 @@
+<nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>管理员列表</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <h2 class="table-title">管理员列表
+            <button nz-button (click)="create()" [nzType]="'primary'" style="float: right;"><i
+                class="anticon anticon-file-text"></i><span>新增</span></button>
+        </h2>
+        <nz-table #nzTable>
+            <thead nz-thead>
+            <tr>
+                <th nz-th width="50"><span>ID</span></th>
+                <th nz-th><span>用户名</span></th>
+                <th nz-th><span>创建日期</span></th>
+                <th nz-th width="200"><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+            <tr nz-tbody-tr *ngFor="let user of users; let i = index;">
+                <td nz-td>{{i+1}}</td>
+                <td nz-td>{{user.phone}}</td>
+                <td nz-td>{{user.createdAt | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                <td nz-td>
+                    <button nz-button (click)="updatePassword(user)" [nzType]="'primary'"><i
+                        class="anticon anticon-delete"></i><span>修改密码</span></button>
+                    <button nz-button (click)="showModal(user)" [nzType]="'primary'"><i
+                        class="anticon anticon-delete"></i><span>删除</span></button>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-content>
+
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'删除管理员'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)"
+          (nzOnOk)="handleOk($event)">
+    <ng-template #modalContent>
+        <p>确认删除该管理员？</p>
+    </ng-template>
+</nz-modal>

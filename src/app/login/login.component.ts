@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Http} from '@angular/http';
+import {Md5} from 'ts-md5';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -8,22 +11,44 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
     validateForm: FormGroup;
+    errMsg: String = '';
+    hidden: Boolean = true;
 
-    _submitForm() {
-        for (const i in this.validateForm.controls) {
-            this.validateForm.controls[i].markAsDirty();
-        }
-    }
-
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder,
+                private http: Http,
+                private router: Router) {
     }
 
     ngOnInit() {
         this.validateForm = this.fb.group({
-            userName: [ null, [ Validators.required ] ],
-            password: [ null, [ Validators.required ] ],
-            remember: [ true ],
+            userName: ['', [Validators.required]],
+            password: ['', [Validators.required, Validators.minLength(6)]]
         });
     }
 
+    _submitForm() {
+        this.validateForm.value.password = Md5.hashStr(this.validateForm.value.password).toString();
+
+        if (this.validateForm.valid) {
+            this.http.post('/api/admin/login', this.validateForm.value).map(res => res.json())
+                .subscribe(json => {
+                    if (json.code === 0) {
+                        this.router.navigateByUrl('/admin/dashboard');
+                        this.hidden = true;
+                        this.errMsg = '';
+                        if (window.sessionStorage && window.sessionStorage.getItem('yk_login_usr')) {
+                            window.sessionStorage.removeItem('yk_login_usr');
+                            window.sessionStorage.setItem('_token', json.token);
+                            window.sessionStorage.setItem('yk_login_usr', this.validateForm.value.userName);
+                        } else {
+                            window.sessionStorage.setItem('_token', json.token);
+                            window.sessionStorage.setItem('yk_login_usr', this.validateForm.value.userName);
+                        }
+                    } else {
+                        this.hidden = false;
+                        this.errMsg = json.msg;
+                    }
+                });
+        }
+    }
 }

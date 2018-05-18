@@ -11,3 +11,9 @@
 :host ::ng-deep .logo a{
     color: #fff;
 }
+.login-out{
+    color: #fff;
+}
+.text-right{
+    text-align: right;
+}

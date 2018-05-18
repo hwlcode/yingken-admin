@@ -19,3 +19,6 @@
 .login-form-button {
     width: 100%;
 }
+.alert-error{
+    margin-bottom: 15px;
+}

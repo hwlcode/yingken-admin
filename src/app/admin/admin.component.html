@@ -1,12 +1,20 @@
 <nz-layout class="layout">
     <nz-header>
-        <div class="logo"><a routerLink="/admin/dashboard">盈垦后台管理</a></div>
-        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
-            <li nz-menu-item><a routerLink="/admin/dashboard">工作台</a></li>
-            <li nz-menu-item><a routerLink="/admin/products">产品管理</a></li>
-            <li nz-menu-item><a routerLink="/admin/orders">订单管理</a></li>
-            <li nz-menu-item><a routerLink="/admin/users">客户管理</a></li>
-        </ul>
+        <div nz-row>
+            <div nz-col nzSpan="22">
+                <div class="logo"><a routerLink="/admin/dashboard">盈垦后台管理</a></div>
+                <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+                    <li nz-menu-item><a routerLink="/admin/dashboard">工作台</a></li>
+                    <li nz-menu-item><a routerLink="/admin/products">产品管理</a></li>
+                    <li nz-menu-item><a routerLink="/admin/orders">订单管理</a></li>
+                    <li nz-menu-item><a routerLink="/admin/users">客户管理</a></li>
+                    <li nz-menu-item><a routerLink="/admin/admin-list">管理员帐号</a></li>
+                </ul>
+            </div>
+            <div nz-col nzSpan="2" class="text-right">
+                <a href="javascript:;" (click)="loginOut()" class="login-out">登出</a>
+            </div>
+        </div>
     </nz-header>
     <router-outlet></router-outlet>
     <nz-footer style="text-align: center;">广西盈垦现代农业有限责任公司©2017～2018 版权所有</nz-footer>

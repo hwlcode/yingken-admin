@@ -21,18 +21,26 @@ import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { AdminListComponent } from './admin/admin-list/admin-list.component';
+import { AdminFormComponent } from './admin/admin-form/admin-form.component';
+import { AdminPasswordComponent } from './admin/admin-password/admin-password.component';
+import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'},
-    {path: 'admin', redirectTo: '/admin/dashboard', pathMatch: 'full'},
+    {path: '', redirectTo: '/login', pathMatch: 'full'},
+    {path: 'admin', redirectTo: '/login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
-    {path: 'admin', component: AdminComponent, children: [
+    {path: 'admin', component: AdminComponent, canActivateChild: [AuthGuard], children: [
         {path: 'dashboard', component: HomeComponent},
         {path: 'products', component: ProductListComponent},
         {path: 'orders', component: OrderListComponent},
         {path: 'order/:id', component: OrderDetailComponent},
         {path: 'users', component: UserListComponent},
         {path: 'product/:id', component: ProductFormComponent},
+        {path: 'password', component: AdminListComponent},
+        {path: 'admin-list', component: AdminListComponent},
+        {path: 'admin-add', component: AdminFormComponent},
+        {path: 'modify-password/:id', component: AdminPasswordComponent}
     ]},
     {path: '**', component: Code404Component}
 ]
@@ -49,7 +57,10 @@ const routes: Routes = [
         UserListComponent,
         HomeComponent,
         ProductFormComponent,
-        OrderDetailComponent
+        OrderDetailComponent,
+        AdminListComponent,
+        AdminFormComponent,
+        AdminPasswordComponent
     ],
     imports: [
         BrowserModule,
@@ -61,7 +72,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         NgZorroAntdModule.forRoot()
     ],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy}],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy}, AuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {
