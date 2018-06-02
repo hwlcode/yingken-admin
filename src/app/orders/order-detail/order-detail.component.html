@@ -20,7 +20,10 @@
         </nz-card>
         <nz-card class="my-card">
             <ng-template #title>
-                订单{{sn}}
+                <div nz-row>
+                    <div nz-col [nzSpan]="20">订单{{sn}}</div>
+                    <div nz-col [nzSpan]="4" style="text-align: right;">{{time | date: 'yyyy-MM-dd hh:mm:ss'}}</div>
+                </div>
             </ng-template>
             <ng-template #body>
                 <div nz-row [nzGutter]="8" *ngFor="let product of orders">

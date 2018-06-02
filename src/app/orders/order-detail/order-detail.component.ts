@@ -18,6 +18,7 @@ export class OrderDetailComponent implements OnInit {
     phone: string;
     name: string;
     hide: Boolean = false;
+    time: string;
 
     isVisible = false;
 
@@ -42,6 +43,7 @@ export class OrderDetailComponent implements OnInit {
                     this.sn = res.data[0].sn;
                     this.sum = res.data[0].sumPrice;
                     this.hide = res.data[0].type > 0 ? true : false;
+                    this.time = res.data[0].createdAt;
                 }
             }
         );
