@@ -19,6 +19,7 @@
                 <th nz-th><span>总价</span></th>
                 <th nz-th><span>下单时间</span></th>
                 <th nz-th><span>状态</span></th>
+                <th nz-th><span>付款方式</span></th>
                 <th nz-th width="100"><span>操作</span></th>
             </tr>
             </thead>
@@ -29,6 +30,7 @@
                 <td nz-td>￥{{order.sumPrice}}元</td>
                 <td nz-td>{{order.createdAt | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
                 <td nz-td>{{ order.status <= 1 ? '己付款,等待发货' : '己发货'}}</td>
+                <td nz-td>{{ order.payway == 0 ? '支付宝' : '微信支付'}}</td>
                 <td nz-td style="text-align: right;">
                     <button nz-button [nzType]="'primary'" [nzSize]="'small'" *ngIf="order.status == 1"
                             (click)="open(order._id)"><span>发货</span></button>

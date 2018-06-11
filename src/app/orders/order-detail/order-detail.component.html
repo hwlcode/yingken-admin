@@ -6,7 +6,7 @@
     </nz-breadcrumb>
     <div style="background:#fff; padding: 24px; min-height: 280px;">
         <h2 class="table-title">订单详情
-        <span style="float: right; color: orangered;">{{hide ? '积分兑换订单' : '普通订单'}}</span>
+            <span style="float: right; color: orangered;">{{hide ? '积分兑换订单' : '普通订单'}}</span>
         </h2>
         <nz-card class="my-card">
             <ng-template #title>
@@ -41,6 +41,7 @@
                     </div>
                 </div>
                 <p class="sum">{{sum}}元</p>
+                <p class="order-type">支付方式：{{payway}}</p>
             </ng-template>
         </nz-card>
         <div class="btn-box">
@@ -54,7 +55,8 @@
     </div>
 </nz-content>
 
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'确认收货'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'确认收货'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)"
+          (nzOnOk)="handleOk($event)">
     <ng-template #modalContent>
         <p>确认后，客户将收到发货通知，请先确认收款到帐号，及客户收货地址无误后再操作！</p>
     </ng-template>

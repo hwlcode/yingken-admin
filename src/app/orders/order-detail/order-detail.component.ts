@@ -19,6 +19,7 @@ export class OrderDetailComponent implements OnInit {
     name: string;
     hide: Boolean = false;
     time: string;
+    payway: string;
 
     isVisible = false;
 
@@ -44,6 +45,7 @@ export class OrderDetailComponent implements OnInit {
                     this.sum = res.data[0].sumPrice;
                     this.hide = res.data[0].type > 0 ? true : false;
                     this.time = res.data[0].createdAt;
+                    this.payway = res.data[0].payway === 0 ? '支付宝' : '微信支付';
                 }
             }
         );
