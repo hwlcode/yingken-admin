@@ -9,7 +9,7 @@ import {Routes, RouterModule} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { Code404Component } from './code404/code404.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { OrderListComponent } from './orders/order-list/order-list.component';
@@ -25,6 +25,8 @@ import { AdminListComponent } from './admin/admin-list/admin-list.component';
 import { AdminFormComponent } from './admin/admin-form/admin-form.component';
 import { AdminPasswordComponent } from './admin/admin-password/admin-password.component';
 import {AuthGuard} from './auth.guard';
+import { QuestionsComponent } from './admin/questions/questions.component';
+import { QuestionsFormComponent } from './admin/questions/questions-form/questions-form.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -40,6 +42,8 @@ const routes: Routes = [
         {path: 'password', component: AdminListComponent},
         {path: 'admin-list', component: AdminListComponent},
         {path: 'admin-add', component: AdminFormComponent},
+        {path: 'questions', component: QuestionsComponent},
+        {path: 'questions-add', component: QuestionsFormComponent},
         {path: 'modify-password/:id', component: AdminPasswordComponent}
     ]},
     {path: '**', component: Code404Component}
@@ -60,11 +64,14 @@ const routes: Routes = [
         OrderDetailComponent,
         AdminListComponent,
         AdminFormComponent,
-        AdminPasswordComponent
+        AdminPasswordComponent,
+        QuestionsComponent,
+        QuestionsFormComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
+        FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
         HttpModule,

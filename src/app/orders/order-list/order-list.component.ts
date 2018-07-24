@@ -11,6 +11,7 @@ export class OrderListComponent implements OnInit {
     public orderList: Array<string> = [];
     nzPageIndex: Number = 1;
     nzTotal: Number = 0;
+    keywords: string = null;
 
     constructor(public http: Http, public router: Router) {
     }
@@ -27,8 +28,8 @@ export class OrderListComponent implements OnInit {
         });
     }
 
-    getOrderList(page) {
-        return this.http.get('/api/order/list?q=' + page).map(res => res.json());
+    getOrderList(page, search?) {
+        return this.http.get('/api/order/list?q=' + page + (search === undefined ? '' : ('&keywords=' + search))).map(res => res.json());
     }
 
     pageChange($event) {
@@ -47,6 +48,20 @@ export class OrderListComponent implements OnInit {
 
     open(id) {
         this.router.navigateByUrl('/admin/order/' + id);
+    }
+
+    onSearch($event) {
+        this.getOrderList(1, this.keywords).subscribe(
+            json => {
+                if (json.code === 0) {
+                    this.orderList = json.orders;
+                    this.nzTotal = json.total;
+                    this.orderList.map(order => {
+                        (order as any).products = JSON.parse((order as any).products);
+                    });
+                }
+            }
+        );
     }
 
 }

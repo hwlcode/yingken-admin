@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "http://dmin.gxyingken.com",
+        "target": "http://admin.gxyingken.com",
         "secure": false,
         "changeOrigin": true
     }
