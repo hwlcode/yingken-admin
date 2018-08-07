@@ -27,6 +27,8 @@ import { AdminPasswordComponent } from './admin/admin-password/admin-password.co
 import {AuthGuard} from './auth.guard';
 import { QuestionsComponent } from './admin/questions/questions.component';
 import { QuestionsFormComponent } from './admin/questions/questions-form/questions-form.component';
+import { ListComponent } from './admin/versions/list/list.component';
+import { FormComponent } from './admin/versions/form/form.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -44,6 +46,7 @@ const routes: Routes = [
         {path: 'admin-add', component: AdminFormComponent},
         {path: 'questions', component: QuestionsComponent},
         {path: 'questions-add', component: QuestionsFormComponent},
+        {path: 'app-versions', component: FormComponent},
         {path: 'modify-password/:id', component: AdminPasswordComponent}
     ]},
     {path: '**', component: Code404Component}
@@ -66,7 +69,9 @@ const routes: Routes = [
         AdminFormComponent,
         AdminPasswordComponent,
         QuestionsComponent,
-        QuestionsFormComponent
+        QuestionsFormComponent,
+        ListComponent,
+        FormComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,36 @@
+<nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+        <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>版本升级</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+        <h2 class="table-title clearfix">版本列表
+            <button nz-button (click)="create()" [nzType]="'primary'" style="float: right;"><i
+                class="anticon anticon-file-text"></i><span>新增</span></button>
+        </h2>
+        <nz-table #nzTable>
+            <thead nz-thead>
+            <tr>
+                <th nz-th width="50"><span>ID</span></th>
+                <th nz-th><span>版本号</span></th>
+                <th nz-th><span>ios地址</span></th>
+                <th nz-th><span>android地址</span></th>
+                <th nz-th width="180"><span>创建日期</span></th>
+                <th nz-th width="60"><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody nz-tbody>
+            <tr nz-tbody-tr *ngFor="let version of versions; let i = index;">
+                <td nz-td>{{i+1}}</td>
+                <td nz-td>{{version.versionNumber}}</td>
+                <td nz-td>{{version.iosUrl}}</td>
+                <td nz-td>{{version.androidUrl}}</td>
+                <td nz-td>{{version.createdAt | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                <td nz-td>
+                    <button nz-button [nzType]="'default'" [nzSize]="'small'" (click)="del(version)"><span>删除</span></button>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-content>
