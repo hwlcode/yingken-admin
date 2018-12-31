@@ -28,16 +28,16 @@
             <ng-template #body>
                 <div nz-row [nzGutter]="8" *ngFor="let product of orders">
                     <div nz-col class="gutter-row" [nzSpan]="2">
-                        <img src="{{product.image}}" alt="" width="80" height="80">
+                        <img src="{{product.product.banner.path}}" alt="" width="80" height="80">
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="18">
-                        {{product.name}}
+                        {{product.product.name}}
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="2">
-                        <p style="text-align: right">x{{product.orderNum}}</p>
+                        <p style="text-align: right">x{{product.num}}</p>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="2">
-                        <p style="text-align: right">{{product.price * product.orderNum}}元</p>
+                        <p style="text-align: right">{{product.product.price * product.num}}元</p>
                     </div>
                 </div>
                 <p class="sum">{{sum}}元</p>

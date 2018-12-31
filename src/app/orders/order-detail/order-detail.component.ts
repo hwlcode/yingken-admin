@@ -35,7 +35,8 @@ export class OrderDetailComponent implements OnInit {
         this.getOrderMsg().subscribe(
             res => {
                 if (res.code === 0) {
-                    this.orders = JSON.parse(res.data[0].products);
+                    const products = JSON.parse(res.data[0].products);
+                    this.orders = products;
                     this.orderStatus = res.data[0].status;
                     this.customer = res.data[0].customer;
                     this.address = this.customer.address;
