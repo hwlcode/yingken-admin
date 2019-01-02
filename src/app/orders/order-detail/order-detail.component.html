@@ -34,13 +34,13 @@
                         {{product.product.name}}
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="2">
-                        <p style="text-align: right">x{{product.num}}</p>
+                        <p style="text-align: right">数量：x{{product.num}}</p>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="2">
-                        <p style="text-align: right">{{product.product.price * product.num}}元</p>
+                        <p style="text-align: right">单价：{{product.product.price}}元</p>
                     </div>
                 </div>
-                <p class="sum">{{sum}}元</p>
+                <p class="sum">总金额：{{sum}}元</p>
                 <p class="order-type">支付方式：{{payway}}</p>
             </ng-template>
         </nz-card>
