@@ -35,13 +35,33 @@ export class OrderDetailComponent implements OnInit {
         this.getOrderMsg().subscribe(
             res => {
                 if (res.code === 0) {
-                    const products = JSON.parse(res.data[0].products);
+                    let products = JSON.parse(res.data[0].products);
+                    if (res.data[0].products.indexOf('orderNum') !== -1) {
+                        const arr = [];
+                        products.map(item => {
+                            const obj = {};
+                            obj['product'] = item;
+                            obj['num'] = item['orderNum'];
+                            arr.push(obj);
+                        });
+                        products = arr;
+                    }
+
+                    // console.log(products);
                     this.orders = products;
                     this.orderStatus = res.data[0].status;
                     this.customer = res.data[0].customer;
-                    this.address = this.customer.address;
-                    this.name = this.customer.name;
-                    this.phone = this.customer.phone;
+
+                    if (res.data[0].address !== undefined) {
+                        this.address = res.data[0].address.address;
+                        this.name = res.data[0].address.name;
+                        this.phone = res.data[0].address.phone;
+                    } else {
+                        this.address = this.customer.address;
+                        this.name = this.customer.name;
+                        this.phone = this.customer.phone;
+                    }
+
                     this.sn = res.data[0].sn;
                     this.sum = res.data[0].sumPrice;
                     this.hide = res.data[0].type > 0 ? true : false;
