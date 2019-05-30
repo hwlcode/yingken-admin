@@ -17,7 +17,11 @@ export class OrderListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getOrderList(1).subscribe(data => {
+        if (window.localStorage.getItem('order_page')) {
+            this.nzPageIndex = parseInt(window.localStorage.getItem('order_page'), 10);
+        }
+
+        this.getOrderList(this.nzPageIndex).subscribe(data => {
             if (data.code === 0) {
                 this.orderList = data.orders;
                 this.nzTotal = data.total;
@@ -44,6 +48,14 @@ export class OrderListComponent implements OnInit {
                     });
                 }
             });
+
+        if (!window.localStorage.getItem('order_page')) {
+            window.localStorage.setItem('order_page', this.nzPageIndex + '');
+        } else {
+            window.localStorage.removeItem('order_page');
+            window.localStorage.setItem('order_page', this.nzPageIndex + '');
+        }
+
     }
 
     open(id) {
