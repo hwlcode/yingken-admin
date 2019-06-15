@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 
@@ -11,7 +11,7 @@ import {Observable} from 'rxjs/Observable';
 export class OrderDetailComponent implements OnInit {
     id: string;
     orders: any;
-    customer: any;
+    // customer: any;
     sn: string;
     sum: number;
     address: string;
@@ -25,7 +25,7 @@ export class OrderDetailComponent implements OnInit {
 
     orderStatus: number;
 
-    constructor(public http: Http,
+    constructor(public http: HttpClient,
                 public router: Router,
                 public routeInfo: ActivatedRoute) {
     }
@@ -36,7 +36,7 @@ export class OrderDetailComponent implements OnInit {
             res => {
                 if (res.code === 0) {
                     let products = JSON.parse(res.data[0].products);
-                    if (res.data[0].products.indexOf('orderNum') !== -1) {
+                    if (res.data[0].products.indexOf('orderNum') !== -1)    {
                         const arr = [];
                         products.map(item => {
                             const obj = {};
@@ -47,20 +47,20 @@ export class OrderDetailComponent implements OnInit {
                         products = arr;
                     }
 
-                    // console.log(products);
                     this.orders = products;
                     this.orderStatus = res.data[0].status;
-                    this.customer = res.data[0].customer;
+                    // this.customer = res.data[0].customer;
 
                     if (res.data[0].address !== undefined) {
                         this.address = res.data[0].address.address;
                         this.name = res.data[0].address.name;
                         this.phone = res.data[0].address.phone;
-                    } else {
-                        this.address = this.customer.address;
-                        this.name = this.customer.name;
-                        this.phone = this.customer.phone;
                     }
+                    // else {
+                    //     this.address = this.customer.address;
+                    //     this.name = this.customer.name;
+                    //     this.phone = this.customer.phone;
+                    // }
 
                     this.sn = res.data[0].sn;
                     this.sum = res.data[0].sumPrice;
@@ -77,7 +77,8 @@ export class OrderDetailComponent implements OnInit {
     }
 
     getOrderMsg(): Observable<any> {
-        return this.http.get('/api/order/' + this.id).map(res => res.json());
+        return this.http.get('/api/order/' + this.id);
+            // .map(res => res.json());
     }
 
     showModal = () => {
@@ -85,9 +86,11 @@ export class OrderDetailComponent implements OnInit {
     }
 
     handleOk = (e) => {
-        this.http.get('/api/order/send/' + this.id).map(res => res.json()).subscribe(
+        this.http.get('/api/order/send/' + this.id)
+            // .map(res => res.json())
+            .subscribe(
             data => {
-                if (data.code === 0) {
+                if (data['code'] === 0) {
                     this.router.navigate(['/admin/orders']);
                 }
             }

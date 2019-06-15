@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Md5} from 'ts-md5/dist/md5';
 import {Router} from '@angular/router';
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs/index";
 
 @Component({
     selector: 'app-admin-list',
@@ -16,7 +16,7 @@ export class AdminListComponent implements OnInit {
 
     isVisible = false;
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private router: Router) {
     }
 
@@ -29,7 +29,8 @@ export class AdminListComponent implements OnInit {
     }
 
     getUserList(): Observable<any> {
-        return this.http.get('/api/admin/admin-list').map(res => res.json());
+        return this.http.get('/api/admin/admin-list')
+            // .map(res => res.json());
     }
 
     create() {
@@ -52,11 +53,11 @@ export class AdminListComponent implements OnInit {
 
     remove(user) {
         this.http.get('/api/admin/delete/' + user._id)
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 res => {
-                    if (res.code === 0) {
-                        this.users = res.data.users;
+                    if (res['code'] === 0) {
+                        this.users = res['data']['users'];
                     }
                 }
             );

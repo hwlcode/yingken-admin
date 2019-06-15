@@ -15,7 +15,7 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { OrderListComponent } from './orders/order-list/order-list.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { HomeComponent } from './home/home.component';
-import {HttpModule} from '@angular/http';
+// import {HttpModule} from '@angular/http';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -79,7 +79,6 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        HttpModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(routes),
         NgZorroAntdModule.forRoot()

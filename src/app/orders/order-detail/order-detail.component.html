@@ -1,4 +1,4 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item><a routerLink="/admin/orders">订单管理</a></nz-breadcrumb-item>
@@ -8,47 +8,37 @@
         <h2 class="table-title">订单详情
             <span style="float: right; color: orangered;">{{hide ? '积分兑换订单' : '普通订单'}}</span>
         </h2>
-        <nz-card class="my-card">
-            <ng-template #title>
-                收货地址
-            </ng-template>
-            <ng-template #body>
-                <p>地址：{{address}}</p>
-                <p>联系人：{{name}}</p>
-                <p>手机：{{phone}}</p>
-            </ng-template>
+        <nz-card class="my-card" nzTitle="收货地址">
+            <p>地址：{{address}}</p>
+            <p>联系人：{{name}}</p>
+            <p>手机：{{phone}}</p>
         </nz-card>
-        <nz-card class="my-card">
+        <nz-card class="my-card" nzTitle="订单{{sn}}" [nzExtra]="title">
             <ng-template #title>
-                <div nz-row>
-                    <div nz-col [nzSpan]="20">订单{{sn}}</div>
-                    <div nz-col [nzSpan]="4" style="text-align: right;">{{time | date: 'yyyy-MM-dd hh:mm:ss'}}</div>
-                </div>
+                创建时间：{{time | date: 'yyyy-MM-dd hh:mm:ss'}}
             </ng-template>
-            <ng-template #body>
-                <div nz-row [nzGutter]="8" *ngFor="let product of orders">
-                    <div nz-col class="gutter-row" [nzSpan]="2">
-                        <img src="{{product.product.banner.path}}" alt="" width="80" height="80">
-                    </div>
-                    <div nz-col class="gutter-row" [nzSpan]="18">
-                        {{product.product.name}}
-                    </div>
-                    <div nz-col class="gutter-row" [nzSpan]="2">
-                        <p style="text-align: right">数量：x{{product.num}}</p>
-                    </div>
-                    <div nz-col class="gutter-row" [nzSpan]="2">
-                        <p style="text-align: right">单价：{{product.product.price}}元</p>
-                    </div>
+            <div nz-row [nzGutter]="8" *ngFor="let product of orders">
+                <div nz-col class="gutter-row" [nzSpan]="2">
+                    <img src="{{product.product.banner.path}}" alt="" width="80" height="80">
                 </div>
-                <p class="sum">总金额：{{sum}}元</p>
-                <p class="order-type">支付方式：{{payway}}</p>
-            </ng-template>
+                <div nz-col class="gutter-row" [nzSpan]="16">
+                    {{product.product.name}}
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="3">
+                    <p style="text-align: right">数量：x{{product.num}}</p>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="3">
+                    <p style="text-align: right">单价：{{product.product.price}}元</p>
+                </div>
+            </div>
+            <p class="sum">总金额：{{sum}}元</p>
+            <p class="order-type">支付方式：{{payway}}</p>
         </nz-card>
         <div class="btn-box">
             <button nz-button [nzType]="'default'" (click)="cannel()">
                 <span>取消</span>
             </button>
-            <button nz-button [nzType]="'primary'" (click)="showModal()" *ngIf="orderStatus == 1">
+            <button nz-button [nzType]="'primary'" (click)="showModal()" *ngIf="orderStatus == 1" style="margin-left: 15px;">
                 <span>确认发货</span>
             </button>
         </div>

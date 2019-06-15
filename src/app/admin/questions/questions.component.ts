@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
@@ -19,7 +19,7 @@ export class QuestionsComponent implements OnInit {
 
     constructor(private router: Router,
                 private fb: FormBuilder,
-                private http: Http) {
+                private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -36,11 +36,11 @@ export class QuestionsComponent implements OnInit {
 
     _getQuestions() {
         this.http.get('/api/admin/questions-list')
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 json => {
-                    if (json.code === 0) {
-                        this.questions = json.data;
+                    if (json['code'] === 0) {
+                        this.questions = json['data'];
                     }
                 }
             );
@@ -50,11 +50,11 @@ export class QuestionsComponent implements OnInit {
         this.dealId = question._id;
 
         this.http.get('/api/admin/question/' + question._id)
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 json => {
-                    if (json.code === 0) {
-                        this.dealQuestion = json.data;
+                    if (json['code'] === 0) {
+                        this.dealQuestion = json['data'];
                         this.isVisible = true;
                     }
                 }
@@ -69,10 +69,10 @@ export class QuestionsComponent implements OnInit {
         if (!this.isView) {
             this.formModel.value.id = this.dealId;
             this.http.post('/api/admin/updateQuestion', this.formModel.value)
-                .map(res => res.json())
+                // .map(res => res.json())
                 .subscribe(
                     json => {
-                        if (json.code === 0) {
+                        if (json['code'] === 0) {
                             this.isVisible = false;
                             this._getQuestions();
                         }
@@ -88,14 +88,14 @@ export class QuestionsComponent implements OnInit {
         this.dealId = question._id;
         this.isView = true;
         this.http.get('/api/admin/question/' + question._id)
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 json => {
-                    if (json.code === 0) {
-                        this.dealQuestion = json.data;
+                    if (json['code'] === 0) {
+                        this.dealQuestion = json['data'];
                         self.formModel.reset({
-                            dealCate: json.data.dealCate + '',
-                            dealDesc: json.data.dealDesc
+                            dealCate: json['data']['dealCate'] + '',
+                            dealDesc: json['data']['dealDesc']
                         });
                         this.isVisible = true;
                     }

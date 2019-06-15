@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class OrderListComponent implements OnInit {
     nzTotal: Number = 0;
     keywords: string = null;
 
-    constructor(public http: Http, public router: Router) {
+    constructor(public http: HttpClient, public router: Router) {
     }
 
     ngOnInit() {
@@ -22,29 +22,40 @@ export class OrderListComponent implements OnInit {
         }
 
         this.getOrderList(this.nzPageIndex).subscribe(data => {
-            if (data.code === 0) {
-                this.orderList = data.orders;
-                this.nzTotal = data.total;
+            if (data['code'] === 0) {
+                this.orderList = data['orders'];
+                this.nzTotal = data['total'];
                 this.orderList.map(order => {
                     (order as any).products = JSON.parse((order as any).products);
+                    let date = (order as any).wx_time_end;
+                    if (date !== undefined) {
+                        date = date.slice(0, 4) + '-' + date.slice(4, 6) + '-' + date.slice(6, 8) + ' ' + date.slice(8, 10) + ':' + date.slice(10, 12) + ':' + date.slice(12, 14);
+                        (order as any).wx_time_end = date;
+                    }
                 });
             }
         });
     }
 
     getOrderList(page, search?) {
-        return this.http.get('/api/order/list?q=' + page + (search === undefined ? '' : ('&keywords=' + search))).map(res => res.json());
+        return this.http.get('/api/order/list?q=' + page + (search === undefined ? '' : ('&keywords=' + search)))
+        // .map(res => res.json());
     }
 
     pageChange($event) {
         this.getOrderList(this.nzPageIndex).subscribe(
             data => {
-                if (data.code === 0) {
-                    this.orderList = data.orders;
-                    this.nzTotal = data.total;
+                if (data['code'] === 0) {
+                    this.orderList = data['orders'];
+                    this.nzTotal = data['total'];
 
                     this.orderList.map(order => {
                         (order as any).products = JSON.parse((order as any).products);
+                        let date = (order as any).wx_time_end;
+                        if (date !== undefined) {
+                            date = date.slice(0, 4) + '-' + date.slice(4, 6) + '-' + date.slice(6, 8) + ' ' + date.slice(8, 10) + ':' + date.slice(10, 12) + ':' + date.slice(12, 14);
+                            (order as any).wx_time_end = date;
+                        }
                     });
                 }
             });
@@ -65,11 +76,16 @@ export class OrderListComponent implements OnInit {
     onSearch($event) {
         this.getOrderList(1, this.keywords).subscribe(
             json => {
-                if (json.code === 0) {
-                    this.orderList = json.orders;
-                    this.nzTotal = json.total;
+                if (json['code'] === 0) {
+                    this.orderList = json['orders'];
+                    this.nzTotal = json['total'];
                     this.orderList.map(order => {
                         (order as any).products = JSON.parse((order as any).products);
+                        let date = (order as any).wx_time_end;
+                        if (date !== undefined) {
+                            date = date.slice(0, 4) + '-' + date.slice(4, 6) + '-' + date.slice(6, 8) + ' ' + date.slice(8, 10) + ':' + date.slice(10, 12) + ':' + date.slice(12, 14);
+                            (order as any).wx_time_end = date;
+                        }
                     });
                 }
             }

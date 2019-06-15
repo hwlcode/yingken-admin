@@ -1,4 +1,4 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item>订单管理</nz-breadcrumb-item>
@@ -7,10 +7,11 @@
         <h2 class="table-title clearfix">
             订单管理
             <div style="float: right;">
-                <input nz-input type="search" placeholder="输入订单尾号查询订单" style="width: 200px;" [(ngModel)]="keywords" (keyup)="onSearch($event)">
+                <input nz-input type="search" placeholder="输入订单尾号查询订单" style="width: 200px;" [(ngModel)]="keywords"
+                       (keyup)="onSearch($event)">
             </div>
         </h2>
-        <nz-table #nzTable [nzAjaxData]="orderList"
+        <nz-table #nzTable [nzData]="orderList"
                   [nzTotal]="nzTotal"
                   [(nzPageIndex)]="nzPageIndex"
                   (nzPageIndexChange)="pageChange($event)"
@@ -20,28 +21,38 @@
             <thead nz-thead>
             <tr>
                 <th nz-th><span>订单号</span></th>
-                <th nz-th><span>类型</span></th>
+                <!--<th nz-th><span>类型</span></th>-->
                 <th nz-th><span>总价</span></th>
-                <th nz-th><span>下单时间</span></th>
+                <th nz-th><span>订单创建时间</span></th>
+                <th nz-th><span>订单交易时间</span></th>
                 <th nz-th><span>状态</span></th>
                 <th nz-th><span>付款方式</span></th>
-                <th nz-th width="100"><span>操作</span></th>
+                <th nz-th width="110"><span>操作</span></th>
             </tr>
             </thead>
             <tbody nz-tbody>
             <tr nz-tbody-tr *ngFor="let order of orderList">
                 <td nz-td>{{order.sn}}</td>
-                <td nz-td>{{order.type == 0 ? '普通订单':'积分兑换订单'}}</td>
+                <!--<td nz-td>{{order.type == 0 ? '普通订单':'积分兑换订单'}}</td>-->
                 <td nz-td>￥{{order.sumPrice}}元</td>
                 <td nz-td>{{order.createdAt | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
-                <td nz-td>{{ order.status <= 1 ? '己付款,等待发货' : '己发货'}}</td>
+                <td nz-td>{{order.wx_time_end}}</td>
+                <td nz-td *ngIf="order.status == 0">等待买家付款</td>
+                <td nz-td *ngIf="order.status == 1" style="color:red;">己付款,等待发货</td>
+                <td nz-td *ngIf="order.status == 2" style="color:green;">己发货</td>
+                <td nz-td *ngIf="order.status == 1000" style="color:grey;">买家己删除</td>
                 <td nz-td>{{ order.payway == 0 ? '支付宝' : '微信支付'}}</td>
-                <td nz-td style="text-align: right;">
-                    <button nz-button [nzType]="'primary'" [nzSize]="'small'" *ngIf="order.status == 1"
-                            (click)="open(order._id)"><span>发货</span></button>
-                    <button nz-button [nzType]="'primary'" [nzSize]="'small'"
-                            *ngIf="order.status == 2 || order.status == 1"
-                            (click)="open(order._id)"><span>查看</span></button>
+                <td nz-td>
+                    <div style="text-align: right;">
+                        <a (click)="open(order._id)" *ngIf="order.status == 1">发货</a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a (click)="open(order._id)">查看</a>
+                    </div>
+                    <!--<button nz-button [nzType]="'primary'" [nzSize]="'small'" *ngIf="order.status == 1"-->
+                    <!--(click)="open(order._id)"><span>发货</span></button>-->
+                    <!--<button nz-button [nzType]="'primary'" [nzSize]="'small'"-->
+                    <!--*ngIf="order.status == 2 || order.status == 1"-->
+                    <!--(click)="open(order._id)"><span>查看</span></button>-->
                 </td>
             </tr>
             </tbody>

@@ -1,4 +1,4 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item>产品管理</nz-breadcrumb-item>
@@ -6,30 +6,47 @@
     <div style="background:#fff; padding: 24px; min-height: 280px;">
         <h2 class="table-title">产品管理</h2>
         <form nz-form [formGroup]="formModel">
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
                     <label for="name" nz-form-item-required>产品名称</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                    <nz-input [nzSize]="'large'" formControlName="name" [nzId]="'name'"></nz-input>
-                    <div nz-form-extra>输入一个好听的名称吧.</div>
-                </div>
-
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label for="price" nz-form-item-required>产品价格</label>
-                </div>
-                <nz-input-group [nzSize]="'large'" nzCompact>
-                    <input style="width: 10%;" nz-input formControlName="price" placeholder="价格">
-                    <input style="width: 5%;" nz-input formControlName="unit" placeholder="单位">
-                </nz-input-group>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <input nz-input formControlName="name">
+                    <nz-form-explain *ngIf="formModel.get('name')?.dirty && formModel.get('name')?.errors"
+                    >输入一个好听的名称吧!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label for="price" nz-form-item-required>产品促销价</label>
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <nz-input-group nzCompact>
+                        <nz-input-number style="width: 20%;" nz-input formControlName="price" placeholder="价格"></nz-input-number>
+                        <input style="width: 15%;" nz-input formControlName="unit" placeholder="单位" (keyup)="updateOriginPrice($event)">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="formModel.get('price')?.dirty && formModel.get('price')?.errors"
+                    >输入产品促销价!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label for="origin_price" nz-form-item-required>产品原价</label>
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <nz-input-group nzCompact>
+                        <nz-input-number style="width: 20%;" nz-input formControlName="origin_price" placeholder="产品原价"></nz-input-number>
+                        <input style="width: 15%;" nz-input formControlName="origin_price_unit" placeholder="单位">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="formModel.get('origin_price')?.dirty && formModel.get('origin_price')?.errors"
+                    >输入产品原价!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
                     <label for="banner" nz-form-item-required>产品图片</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
                     <nz-upload class="avatar-uploader"
                                nzAction="/api/upload"
                                nzName="file"
@@ -39,33 +56,49 @@
                         <i *ngIf="!avatarUrl" class="anticon anticon-plus avatar-uploader-trigger"></i>
                         <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar">
                     </nz-upload>
-                    <div nz-form-extra>给产品上传一个清析的照片.</div>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label for="code" nz-form-item-required>积分兑换</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                    <nz-input-number formControlName="code" [nzMin]="1" [nzStep]="1"></nz-input-number>
-                    <div nz-form-extra>需要多少积分兑换该商品.</div>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label for="desc">产品描述</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                    <nz-input formControlName="desc" nzType="textarea"></nz-input>
-                </div>
-            </div>
+                    <!--<nz-form-explain *ngIf="formModel.get('price')?.dirty && formModel.get('price')?.errors"-->
+                    <!--&gt;给产品上传一个清析的照片!</nz-form-explain>-->
+                </nz-form-control>
+            </nz-form-item>
 
-            <div nz-form-item nz-row style="margin-bottom:8px;">
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label for="code" nz-form-item-required>积分兑换</label>
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <nz-input-number formControlName="code" [nzMin]="1" [nzStep]="1"></nz-input-number>
+                    <nz-form-explain *ngIf="formModel.get('code')?.dirty && formModel.get('code')?.errors"
+                    >输入产品兑换积分!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label for="desc">产品描述</label>
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <textarea nz-input formControlName="desc"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nz-col [nzSm]="6" [nzXs]="24">
+                    <label for="desc">状态</label>
+                </nz-form-label>
+                <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+                    <nz-radio-group formControlName="pro_status">
+                        <label nz-radio [nzValue]="0">上架销售中</label>
+                        <label nz-radio [nzValue]="1">产品下架</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item style="margin-bottom:8px;">
                 <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
-                    <button nz-button [nzSize]="'large'" [nzType]="'primary'" *ngIf="isSave" (click)="save()">保存</button>
-                    <button nz-button [nzSize]="'large'" [nzType]="'primary'" *ngIf="!isSave" (click)="update(product)">更新</button>
+                    <button nz-button [nzType]="'primary'" *ngIf="isSave" (click)="save()">保存
+                    </button>
+                    <button nz-button [nzType]="'primary'" *ngIf="!isSave" (click)="update(product)">
+                        更新
+                    </button>
                 </div>
-            </div>
+            </nz-form-item>
         </form>
     </div>
 </nz-content>

@@ -1,4 +1,4 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item>版本升级</nz-breadcrumb-item>
@@ -7,50 +7,43 @@
         <div class="admin-form">
             <h2>版本升级</h2>
             <form nz-form [formGroup]="formModel" (ngSubmit)="_submitForm($event, formModel.value)">
-                <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                        <label for="versionNumber" nz-form-item-required>版本号</label>
-                    </div>
-                    <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                        <nz-input [nzSize]="'large'" formControlName="versionNumber" [nzId]="'versionNumber'" style="width: 100px;"></nz-input>
-                        <div nz-form-explain *ngIf="formModel.get('versionNumber').dirty && formModel.get('versionNumber').hasError('required')">版本号不能为空!</div>
-                        <div nz-form-extra>版本号一定要大于前一个版本号才会提示更新.</div>
-                    </div>
-                </div>
-                <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                        <label for="iosUrl" nz-form-item-required>IOS下载地址</label>
-                    </div>
-                    <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                        <nz-input [nzSize]="'large'" formControlName="iosUrl" [nzId]="'iosUrl'"></nz-input>
-                        <div nz-form-explain *ngIf="formModel.get('iosUrl').dirty && formModel.get('iosUrl').hasError('required')">IOS下载不能为空!</div>
-                        <div nz-form-extra>ios官方己经不提供热更新，只能在官网url下载.</div>
-                    </div>
-                </div>
-                <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                        <label for="androidUrl" nz-form-item-required>Android下载地址</label>
-                    </div>
-                    <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                        <nz-input [nzSize]="'large'" formControlName="androidUrl" [nzId]="'androidUrl'"></nz-input>
-                        <div nz-form-explain *ngIf="formModel.get('androidUrl').dirty && formModel.get('androidUrl').hasError('required')">Android地址不能为空!</div>
-                        <div nz-form-extra>下载的url拖管于七牛，一定要是签名过后的apk,否则用户无法下载.</div>
-                    </div>
-                </div>
-                <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                        <label for="desc" nz-form-item-required>升级内容</label>
-                    </div>
-                    <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                        <nz-input [nzSize]="'large'"  [nzRows]="10" [nzType]="'textarea'" formControlName="desc" [nzId]="'desc'"></nz-input>
-                        <div nz-form-explain *ngIf="formModel.get('desc').dirty && formModel.get('desc').hasError('required')">升级内容不能为空!</div>
-                    </div>
-                </div>
-                <div nz-form-item nz-row>
-                    <div nz-col [nzOffset]="6" [nzSpan]="12" nz-form-control>
-                        <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!formModel.valid">提交</button>
-                    </div>
-                </div>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="captcha" nzRequired>版本号</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="versionNumber" style="width: 100px;">
+                        <nz-form-explain *ngIf="formModel.get('versionNumber').dirty && formModel.get('versionNumber').hasError('required')">版本号不能为空!</nz-form-explain>
+                        <nz-form-extra>版本号一定要大于前一个版本号才会提示更新.</nz-form-extra>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="captcha" nzRequired>IOS下载地址</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="iosUrl">
+                        <nz-form-explain *ngIf="formModel.get('iosUrl').dirty && formModel.get('iosUrl').hasError('required')">IOS下载不能为空!</nz-form-explain>
+                        <nz-form-extra>ios官方己经不提供热更新，只能在官网url下载.</nz-form-extra>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="captcha" nzRequired>Android下载地址</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="androidUrl">
+                        <nz-form-explain *ngIf="formModel.get('androidUrl').dirty && formModel.get('androidUrl').hasError('required')">Android地址不能为空!</nz-form-explain>
+                        <nz-form-extra>下载的url拖管于七牛，一定要是签名过后的apk,否则用户无法下载.</nz-form-extra>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="captcha" nzRequired>升级内容</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <textarea nz-input rows="10" formControlName="desc"></textarea>
+                        <nz-form-explain *ngIf="formModel.get('desc').dirty && formModel.get('desc').hasError('required')">升级内容不能为空!</nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item nz-row style="margin-bottom:8px;">
+                    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                        <button nz-button [nzType]="'primary'" [disabled]="!formModel.valid">提交</button>
+                    </nz-form-control>
+                </nz-form-item>
             </form>
         </div>
     </div>

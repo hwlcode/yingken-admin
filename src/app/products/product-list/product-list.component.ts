@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
 
@@ -19,22 +19,23 @@ export class ProductListComponent implements OnInit {
     delProduct: any;
 
     constructor(
-        public http: Http,
+        public http: HttpClient,
         public router: Router
     ) {
     }
 
     ngOnInit() {
         this.getProducts(1).subscribe(res => {
-            if (res.code === 0) {
-                this.products = res.data;
-                this.nzTotal = res.total;
+            if (res['code'] === 0) {
+                this.products = res['data'];
+                this.nzTotal = res['total'];
             }
         });
     }
 
     getProducts(page) {
-        return this.http.get('/api/productList?q=' + page).map(res => res.json());
+        return this.http.get('/api/productList?q=' + page)
+            // .map(res => res.json());
     }
 
     update(product) {
@@ -43,11 +44,11 @@ export class ProductListComponent implements OnInit {
 
     remove(product) {
         this.http.get('/api/delete/' + product._id)
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 res => {
-                    if (res.code === 0) {
-                        this.products = res.data;
+                    if (res['code'] === 0) {
+                        this.products = res['data'];
                     }
                 }
             );
@@ -59,9 +60,9 @@ export class ProductListComponent implements OnInit {
 
     pageChange($event) {
         this.getProducts(this.nzPageIndex).subscribe(res => {
-            if (res.code === 0) {
-                this.products = res.data;
-                this.nzTotal = res.total;
+            if (res['code'] === 0) {
+                this.products = res['data'];
+                this.nzTotal = res['total'];
             }
         });
     }

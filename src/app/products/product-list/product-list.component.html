@@ -1,11 +1,14 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item>产品管理</nz-breadcrumb-item>
     </nz-breadcrumb>
     <div style="background:#fff; padding: 24px; min-height: 280px;">
-        <h2 class="table-title">产品管理<button nz-button (click)="create()" [nzType]="'primary'" style="float: right;"><i class="anticon anticon-file-text"></i><span>新增</span></button></h2>
-        <nz-table #nzTable [nzAjaxData]="products"
+        <h2 class="table-title">产品管理
+            <button nz-button (click)="create()" [nzType]="'primary'" style="float: right;"><i
+                class="anticon anticon-file-text"></i><span>新增</span></button>
+        </h2>
+        <nz-table #nzTable [nzData]="products"
                   [nzTotal]="nzTotal"
                   [(nzPageIndex)]="nzPageIndex"
                   (nzPageIndexChange)="pageChange($event)"
@@ -17,8 +20,10 @@
                 <th nz-th width="50"><span>ID</span></th>
                 <th nz-th width="100"><span>图片</span></th>
                 <th nz-th><span>名称</span></th>
-                <th nz-th width="150"><span>单价</span></th>
-                <th nz-th width="180"><span>操作</span></th>
+                <th nz-th width="150"><span>促销价</span></th>
+                <th nz-th width="150"><span>原价</span></th>
+                <th nz-th width="150"><span>状态</span></th>
+                <th nz-th width="110"><span>操作</span></th>
             </tr>
             </thead>
             <tbody nz-tbody>
@@ -27,9 +32,16 @@
                 <td nz-td><img src="{{product.banner.path}}" alt="" width="60" height="60"></td>
                 <td nz-td>{{product.name}}</td>
                 <td nz-td>{{product.price}}元/{{product.unit}}</td>
-                <td nz-td>
-                    <button nz-button (click)="update(product)" [nzType]="'primary'"><i class="anticon anticon-file-text"></i><span>更新</span></button>
-                    <button nz-button (click)="showModal(product)" [nzType]="'primary'"><i class="anticon anticon-delete"></i><span>删除</span></button>
+                <td nz-td>{{product.origin_price}}元/{{product.origin_price_unit}}</td>
+                <td nz-td *ngIf="product.pro_status == 0" style="color:green">售卖中</td>
+                <td nz-td *ngIf="product.pro_status == 1" style="color:darkred">己下架</td>
+                <td nz-td *ngIf="product.pro_status == 1000" style="color:grey">己删除</td>
+                <td nz-td style="text-align: right;">
+                    <span *ngIf="product.pro_status != 1000">
+                    <a (click)="update(product)">更新</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a (click)="showModal(product)">删除</a>
+                        </span>
                 </td>
             </tr>
             </tbody>
@@ -37,7 +49,8 @@
     </div>
 </nz-content>
 
-<nz-modal [nzVisible]="isVisible" [nzTitle]="'删除产品'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)">
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'删除产品'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)"
+          (nzOnOk)="handleOk($event)">
     <ng-template #modalContent>
         <p>确认删除该商品？</p>
     </ng-template>

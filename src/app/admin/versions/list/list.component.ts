@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-list',
@@ -11,7 +11,7 @@ export class ListComponent implements OnInit {
     versions: any = [];
 
     constructor(private router: Router,
-                private http: Http) {
+                private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -24,11 +24,11 @@ export class ListComponent implements OnInit {
 
     getVersions() {
         this.http.get('/api/admin/versions')
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 json => {
-                    if (json.code === 0) {
-                        this.versions = json.data;
+                    if (json['code'] === 0) {
+                        this.versions = json['data'];
                     }
                 }
             );
@@ -36,11 +36,11 @@ export class ListComponent implements OnInit {
 
     del(version) {
         this.http.get('/api/admin/del/version/' + version._id)
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 json => {
-                    if (json.code === 0) {
-                        this.versions = json.data;
+                    if (json['code'] === 0) {
+                        this.versions = json['data'];
                     }
                 }
             );

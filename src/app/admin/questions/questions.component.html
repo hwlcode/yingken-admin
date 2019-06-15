@@ -1,4 +1,4 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item>问题把馈</nz-breadcrumb-item>
@@ -25,12 +25,12 @@
                 <td nz-td>{{question.createdAt | date:'yyyy-MM-dd hh:mm:ss'}}</td>
                 <td nz-td>{{ question.status === 0 ? "待解决" : "己处理" }}</td>
                 <td nz-td style="text-align: right;">
-                    <button nz-button *ngIf="question.status === 0" (click)="deal(question)" [nzType]="'primary'"><span>处理</span>
-                    </button>
+                    <a *ngIf="question.status === 0" (click)="deal(question)"><span>处理</span>
+                    </a>
 
-                    <button nz-button *ngIf="question.status === 1" (click)="showDeal(question)" [nzType]="'default'">
+                    <a *ngIf="question.status === 1" (click)="showDeal(question)">
                         <span>查看</span>
-                    </button>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -41,60 +41,48 @@
 <nz-modal [nzVisible]="isVisible" [nzTitle]="'问题处理'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)"
           (nzOnOk)="handleOk($event)" *ngIf="dealQuestion != null">
     <ng-template #modalContent>
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label>类别</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">类别</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
                 {{ dealQuestion.cate === 0 ? 'Bug反馈' : '新需求'}}
-            </div>
-        </div>
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label>标题</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">标题</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
                 {{ dealQuestion.title }}
-            </div>
-        </div>
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label>描述</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">描述</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
                 {{ dealQuestion.desc }}
-            </div>
-        </div>
-        <div nz-form-item nz-row *ngIf="dealQuestion.files.length > 0">
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label>图片</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" *ngFor="let img of dealQuestion.files">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="dealQuestion.files.length > 0">
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">图片</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" *ngFor="let img of dealQuestion.files">
                 <a href="{{img.path}}" target="_blank">{{img.originalName}}</a>
-            </div>
-        </div>
+            </nz-form-control>
+        </nz-form-item>
         <form nz-form [formGroup]="formModel">
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label>问题分类</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>问题分类</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
                     <nz-select formControlName="dealCate" nzAllowClear nzPlaceHolder="请选择" [nzDisabled]="isView">
                         <nz-option nzValue="1" nzLabel="这是Bug"></nz-option>
                         <nz-option nzValue="2" nzLabel="设计如此，不予处理"></nz-option>
                         <nz-option nzValue="3" nzLabel="感觉时间不够用，延后开发"></nz-option>
                     </nz-select>
-                </div>
-            </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                    <label>处理结果</label>
-                </div>
-                <div nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>处理结果</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
                     <textarea row="8" nz-input formControlName="dealDesc" placeholder="告诉处理结果"
-                              style="height: 200px;" [nzDisabled]="isView"></textarea>
-                </div>
-            </div>
+                              style="height: 200px;" [disabled]="isView"></textarea>
+                </nz-form-control>
+            </nz-form-item>
         </form>
     </ng-template>
 </nz-modal>

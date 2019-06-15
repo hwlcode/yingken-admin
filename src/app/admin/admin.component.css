@@ -1,9 +1,9 @@
 :host ::ng-deep .logo {
-    width: 120px;
+    /*width: 100%;*/
     height: 31px;
     border-radius: 6px;
-    margin: 16px 24px 16px 0;
-    float: left;
+    margin: 16px auto 16px auto;
+    /*float: left;*/
     font-size: 20px;
     line-height: 31px;
     text-align: center;
@@ -12,8 +12,22 @@
     color: #fff;
 }
 .login-out{
-    color: #fff;
+    color: #333;
+    display: inline-block;
+    padding-right: 20px;
 }
 .text-right{
     text-align: right;
+}
+
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.trigger:hover {
+    color: #1890ff;
 }

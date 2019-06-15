@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-user-list',
@@ -11,14 +11,14 @@ export class UserListComponent implements OnInit {
     nzTotal: Number = 0;
     nzPageIndex: Number = 1;
 
-    constructor(public http: Http) {
+    constructor(public http: HttpClient) {
     }
 
     ngOnInit() {
         this.getUsers(1).subscribe(res => {
-            if (res.code === 0) {
-                this.users = res.data;
-                this.nzTotal = res.total;
+            if (res['code'] === 0) {
+                this.users = res['data'];
+                this.nzTotal = res['total'];
 
                 this.users.map(user => {
                     if ((user as any).avatar == null) {
@@ -32,14 +32,15 @@ export class UserListComponent implements OnInit {
     }
 
     getUsers(page) {
-        return this.http.get('/api/users?q=' + page).map(res => res.json());
+        return this.http.get('/api/users?q=' + page)
+            // .map(res => res.json());
     }
 
     pageChange($event) {
         this.getUsers(this.nzPageIndex).subscribe(res => {
-            if (res.code === 0) {
-                this.users = res.data;
-                this.nzTotal = res.total;
+            if (res['code'] === 0) {
+                this.users = res['data'];
+                this.nzTotal = res['total'];
 
                 this.users.map(user => {
                     if ((user as any).avatar == null) {

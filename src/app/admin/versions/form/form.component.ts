@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
@@ -14,7 +14,7 @@ export class FormComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private message: NzMessageService,
-                private http: Http) {
+                private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -37,10 +37,10 @@ export class FormComponent implements OnInit {
         }
         if (this.formModel.valid) {
             this.http.post('/api/admin/save/version', value)
-                .map(res => res.json())
+                // .map(res => res.json())
                 .subscribe(
                     json => {
-                        if (json.code === 0) {
+                        if (json['code'] === 0) {
                             this.message.success('保存成功');
                         }
                     }
@@ -50,16 +50,16 @@ export class FormComponent implements OnInit {
 
     _getVersion() {
         this.http.get('/api/admin/get/version')
-            .map(res => res.json())
+            // .map(res => res.json())
             .subscribe(
                 json => {
-                    if (json.code === 0) {
-                        if (json.data !== null) {
+                    if (json['code'] === 0) {
+                        if (json['data'] !== null) {
                             this.formModel.reset({
-                                versionNumber: json.data.versionNumber,
-                                iosUrl: json.data.iosUrl,
-                                androidUrl: json.data.androidUrl,
-                                desc: json.data.desc
+                                versionNumber: json['data']['versionNumber'],
+                                iosUrl: json['data']['iosUrl'],
+                                androidUrl: json['data']['androidUrl'],
+                                desc: json['data']['desc']
                             });
                         }
                     }

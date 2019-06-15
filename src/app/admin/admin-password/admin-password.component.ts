@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Md5} from 'ts-md5/dist/md5';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -19,16 +19,17 @@ export class AdminPasswordComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private routerInfo: ActivatedRoute,
                 private router: Router,
-                private http: Http) {
+                private http: HttpClient) {
     }
 
     ngOnInit() {
         this.id = this.routerInfo.snapshot.params['id'];
-        this.http.get('/api/admin/get_admin_user/' + this.id).map(res => res.json())
+        this.http.get('/api/admin/get_admin_user/' + this.id)
+            // .map(res => res.json())
             .subscribe(json => {
-                if (json.code === 0) {
-                    this.user = json.data[0];
-                    this.password = json.data[0].password;
+                if (json['code'] === 0) {
+                    this.user = json['data'][0];
+                    this.password = json['data'][0].password;
                     this.validateForm.reset({
                         phone: this.user.phone
                     });
@@ -53,9 +54,9 @@ export class AdminPasswordComponent implements OnInit {
             const self = this;
             this.validateForm.value.id = this.id;
             this.http.post(url, this.validateForm.value)
-                .map(res => res.json())
+                // .map(res => res.json())
                 .subscribe(function (data) {
-                    if (data.code === 0) {
+                    if (data['code'] === 0) {
                         self.router.navigateByUrl('/admin/admin-list');
                     }
                 });

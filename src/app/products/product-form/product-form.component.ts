@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 
@@ -12,17 +12,14 @@ import {Observable} from 'rxjs/Observable';
 })
 export class ProductFormComponent implements OnInit {
     formModel: FormGroup;
-    unit = '/';
-
     loading = false;
     avatarUrl: string;
     avatarPath: string;
-
-    product: Product = new Product('', '', '', '', 0, '', ''); // 数据还没有回来之前给一个默认值
-    isSave: Boolean = true;
+    product: any;
+    isSave: boolean = true;
 
     constructor(private msg: NzMessageService,
-                public http: Http,
+                public http: HttpClient,
                 public routeInfo: ActivatedRoute,
                 public router: Router) {
     }
@@ -33,32 +30,46 @@ export class ProductFormComponent implements OnInit {
         this.formModel = fb.group({
             name: ['', [Validators.required, Validators.minLength(2)]],
             price: ['', [Validators.required]],
+            origin_price: ['', [Validators.required]],
+            origin_price_unit: ['', [Validators.required]],
             banner: ['', [Validators.required]],
             code: [0, [Validators.required]],
             unit: ['', [Validators.required]],
-            desc: ['']
+            desc: [''],
+            pro_status: [0, [Validators.required]]
         });
 
         const id = this.routeInfo.snapshot.params['id'];
-        this.getProduct(id).subscribe(
-            res => {
-                if (id != 0) {
-                    self.isSave = false;
-                    this.avatarUrl = (res.banner as any).path;
-                    this.avatarPath = (res.banner as any)._id;
-                }
+        if (id !== '0') {
+            this.getProduct(id).subscribe(
+                res => {
+                    if (id !== '0') {
+                        self.isSave = false;
+                        this.avatarUrl = (res['banner'] as any).path;
+                        this.avatarPath = (res['banner'] as any)._id;
+                    }
 
-                this.formModel.reset({
-                    name: res.name,
-                    price: res.price,
-                    unit: res.unit,
-                    code: res.code,
-                    banner: res.banner,
-                    desc: res.desc
-                });
-                this.product = res;
-            }
-        );
+                    this.formModel.reset({
+                        name: res['name'],
+                        price: res['price'],
+                        unit: res['unit'],
+                        code: res['code'],
+                        banner: res['banner'],
+                        desc: res['desc'],
+                        origin_price: res['origin_price'],
+                        origin_price_unit: res['origin_price_unit'],
+                        pro_status: parseInt(res['pro_status'], 10)
+                    });
+                    this.product = res;
+                }
+            );
+        }
+    }
+
+    updateOriginPrice(e) {
+        this.formModel.patchValue({
+            'origin_price_unit': e.target.value
+        });
     }
 
     beforeUpload = (file: File) => {
@@ -101,63 +112,53 @@ export class ProductFormComponent implements OnInit {
             price: this.formModel.value.price,
             code: this.formModel.value.code,
             unit: this.formModel.value.unit,
-            desc: this.formModel.value.desc
+            desc: this.formModel.value.desc,
+            origin_price: this.formModel.value.origin_price,
+            origin_price_unit: this.formModel.value.origin_price_unit,
+            pro_status: this.formModel.value.pro_status
         });
         if (this.formModel.valid && this.formModel.value.banner !== null) {
             const url = '/api/saveProduct';
             const self = this;
             this.http.post(url, this.formModel.value)
-                .map(res => res.json())
+            // .map(res => res.json())
                 .subscribe(function (data) {
-                    if (data.code === 0) {
+                    if (data['code'] === 0) {
                         self.router.navigateByUrl('/admin/products');
                     }
                 });
         }
     }
 
-    update(product: Product) {
+    update(product) {
         this.formModel.reset({
             banner: this.avatarPath,
             name: this.formModel.value.name,
             price: this.formModel.value.price,
             code: this.formModel.value.code,
             unit: this.formModel.value.unit,
-            desc: this.formModel.value.desc
+            desc: this.formModel.value.desc,
+            origin_price: this.formModel.value.origin_price,
+            origin_price_unit: this.formModel.value.origin_price_unit,
+            pro_status: this.formModel.value.pro_status
         });
         if (this.formModel.valid && this.formModel.value.banner !== null) {
             const url = '/api/updateProduct/' + product._id;
             const self = this;
-            // const params = new URLSearchParams();
-            // params.append('name', this.formModel.value.name);
-            // params.append('price', this.formModel.value.price);
-            // params.append('banner', this.formModel.value.banner);
-            // params.append('code', this.formModel.value.code);
 
             this.http.post(url, this.formModel.value)
-                .map(res => res.json())
+            // .map(res => res.json())
                 .subscribe(function (data) {
-                    if (data.code === 0) {
+                    if (data['code'] === 0) {
                         self.router.navigateByUrl('/admin/products');
                     }
                 });
         }
     }
 
-    getProduct(id: string): Observable<Product> {
-        return this.http.get('/api/product/' + id).map(res => res.json());
+    getProduct(id: string) {
+        return this.http.get('/api/product/' + id)
+        // .map(res => res.json());
     }
 
 }
-
-class Product {
-    constructor(public _id: string,
-                public banner: string,
-                public name: string,
-                public price: string,
-                public code: number,
-                public unit: string,
-                public desc: string) {
-    }
-}
-

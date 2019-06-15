@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class QuestionsFormComponent implements OnInit {
     previewVisible = false;
 
     constructor(private fb: FormBuilder,
-                private http: Http,
+                private http: HttpClient,
                 private router: Router,
                 private msg: NzMessageService) {
     }
@@ -54,10 +54,10 @@ export class QuestionsFormComponent implements OnInit {
 
         if (this.formModel.valid) {
             this.http.post('/api/admin/saveQuestion', this.formModel.value)
-                .map(res => res.json())
+                // .map(res => res.json())
                 .subscribe(
                     json => {
-                        if (json.code === 0) {
+                        if (json['code'] === 0) {
                             this.router.navigateByUrl('/admin/questions');
                         }
                     }

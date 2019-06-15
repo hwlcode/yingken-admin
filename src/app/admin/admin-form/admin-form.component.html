@@ -1,4 +1,4 @@
-<nz-content style="padding:0 50px;">
+<nz-content style="padding:0 15px;">
     <nz-breadcrumb style="margin:12px 0;">
         <nz-breadcrumb-item><a routerLink="/admin/dashboard">首页</a></nz-breadcrumb-item>
         <nz-breadcrumb-item><a routerLink="/admin/admin-list">管理员列表</a></nz-breadcrumb-item>
@@ -6,38 +6,33 @@
     </nz-breadcrumb>
     <div style="background:#fff; padding: 24px; min-height: 280px;">
         <div class="admin-form">
-    <h2>管理员帐号</h2>
-    <form nz-form [formGroup]="formModel" (ngSubmit)="_submitForm()">
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label for="phone" nz-form-item-required>手机号码</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                <nz-input [nzSize]="'large'" formControlName="phone" [nzId]="'phone'"></nz-input>
-            </div>
+            <h2>管理员帐号</h2>
+            <form nz-form [formGroup]="formModel" (ngSubmit)="_submitForm()">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>手机号码</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="phone">
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="password" [type]="'password'"
+                               (ngModelChange)="updateConfirmValidator()">
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>密码</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="checkPassword" [type]="'password'">
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nz-row style="margin-bottom:8px;">
+                    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                        <button nz-button [nzType]="'primary'">保存</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
         </div>
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label for="password" nz-form-item-required>密码</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                <nz-input [nzSize]="'large'" formControlName="password" [nzType]="'password'" [nzId]="'password'" (ngModelChange)="updateConfirmValidator()"></nz-input>
-            </div>
-        </div>
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSm]="6" [nzXs]="24">
-                <label for="checkPassword" nz-form-item-required>确认密码</label>
-            </div>
-            <div nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
-                <nz-input [nzSize]="'large'" formControlName="checkPassword" [nzType]="'password'" [nzId]="'checkPassword'"></nz-input>
-            </div>
-        </div>
-        <div nz-form-item nz-row style="margin-bottom:8px;">
-            <div nz-form-control nz-col [nzSpan]="14" [nzOffset]="6">
-                <button nz-button [nzSize]="'large'" [nzType]="'primary'">保存</button>
-            </div>
-        </div>
-    </form>
-</div>
     </div>
 </nz-content>

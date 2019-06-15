@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Observable} from "rxjs/index"; //Observable
+import { map } from "rxjs/operators";  //操作符
 
 @Component({
     selector: 'app-admin-form',
@@ -14,7 +16,7 @@ export class AdminFormComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private router: Router,
-                private http: Http) {
+                private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -33,9 +35,9 @@ export class AdminFormComponent implements OnInit {
             const url = '/api/admin/saveAdmin';
             const self = this;
             this.http.post(url, this.formModel.value)
-                .map(res => res.json())
-                .subscribe(function (data) {
-                    if (data.code === 0) {
+                // .map(res => res.json())
+                .subscribe( (data) => {
+                    if (data['code'] === 0) {
                         self.router.navigateByUrl('/admin/admin-list');
                     }
                 });

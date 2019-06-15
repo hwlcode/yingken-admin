@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "http://admin.gxyingken.com",
+        "target": "http://192.168.1.103",
         "secure": false,
         "changeOrigin": true
     }
