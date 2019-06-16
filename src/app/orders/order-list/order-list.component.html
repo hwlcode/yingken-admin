@@ -12,6 +12,7 @@
             </div>
         </h2>
         <nz-table #nzTable [nzData]="orderList"
+                  [nzFrontPagination]="false"
                   [nzTotal]="nzTotal"
                   [(nzPageIndex)]="nzPageIndex"
                   (nzPageIndexChange)="pageChange($event)"
@@ -31,7 +32,7 @@
             </tr>
             </thead>
             <tbody nz-tbody>
-            <tr nz-tbody-tr *ngFor="let order of orderList">
+            <tr nz-tbody-tr *ngFor="let order of nzTable.data">
                 <td nz-td>{{order.sn}}</td>
                 <!--<td nz-td>{{order.type == 0 ? '普通订单':'积分兑换订单'}}</td>-->
                 <td nz-td>￥{{order.sumPrice}}元</td>

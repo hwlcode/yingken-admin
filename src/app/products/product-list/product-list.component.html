@@ -9,6 +9,7 @@
                 class="anticon anticon-file-text"></i><span>新增</span></button>
         </h2>
         <nz-table #nzTable [nzData]="products"
+                  [nzFrontPagination]="false"
                   [nzTotal]="nzTotal"
                   [(nzPageIndex)]="nzPageIndex"
                   (nzPageIndexChange)="pageChange($event)"
@@ -27,7 +28,7 @@
             </tr>
             </thead>
             <tbody nz-tbody>
-            <tr nz-tbody-tr *ngFor="let product of products; let i = index;">
+            <tr nz-tbody-tr *ngFor="let product of nzTable.data; let i = index;">
                 <td nz-td>{{i+1}}</td>
                 <td nz-td><img src="{{product.banner.path}}" alt="" width="60" height="60"></td>
                 <td nz-td>{{product.name}}</td>

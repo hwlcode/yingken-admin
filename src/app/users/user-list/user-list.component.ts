@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit {
     }
 
     getUsers(page) {
-        return this.http.get('/api/users?q=' + page)
+        return this.http.get('/api/users?q=' + page);
             // .map(res => res.json());
     }
 

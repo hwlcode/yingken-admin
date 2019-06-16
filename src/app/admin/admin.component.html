@@ -1,5 +1,5 @@
 <nz-layout>
-    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="trigger">
         <div class="logo" *ngIf="!isCollapsed"><a routerLink="/admin/dashboard">盈垦后台管理</a></div>
         <div class="logo" *ngIf="isCollapsed"><a routerLink="/admin/dashboard">盈垦</a></div>
         <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
