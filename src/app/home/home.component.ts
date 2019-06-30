@@ -8,11 +8,14 @@ import {HttpClient} from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
     product_sun: Number = 0;
+    product_0_sun: Number = 0;
+    product_1_sun: Number = 0;
     order_sun: Number = 0;
     order_today: Number = 0;
     order_status_1: Number = 0;
     user_sun: Number = 0;
     user_today: Number = 0;
+    order_status_0: Number = 0;
 
     constructor(public http: HttpClient) {
     }
@@ -22,9 +25,12 @@ export class HomeComponent implements OnInit {
             res => {
                 if (res['code'] === 0) {
                     this.product_sun = res['data']['product_sun'];
+                    this.product_0_sun = res['data']['product_0_sun'];
+                    this.product_1_sun = res['data']['product_1_sun'];
                     this.order_sun = res['data']['order_sun'];
                     this.order_today = res['data']['order_today'];
                     this.order_status_1 =  res['data']['order_status_1'];
+                    this.order_status_0 =  res['data']['order_status_0'];
                     this.user_sun = res['data']['user_sun'];
                     this.user_today = res['data']['user_today'];
                 }

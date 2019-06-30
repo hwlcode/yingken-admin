@@ -1,9 +1,14 @@
-.home-title{
+.home-title {
     font-size: 14px;
     margin: 15px;
 }
-.text-num{
+
+.text-num {
     /*text-align: center;*/
     font-size: 25px;
     font-weight: bold;
+}
+
+p {
+    margin-bottom: 0;
 }
