@@ -24,6 +24,7 @@
                 <th nz-th width="150"><span>促销价</span></th>
                 <th nz-th width="150"><span>原价</span></th>
                 <th nz-th width="150"><span>状态</span></th>
+                <th nz-th width="150"><span>展示排序</span></th>
                 <th nz-th width="110"><span>操作</span></th>
             </tr>
             </thead>
@@ -37,6 +38,7 @@
                 <td nz-td *ngIf="product.pro_status == 0" style="color:green">售卖中</td>
                 <td nz-td *ngIf="product.pro_status == 1" style="color:darkred">己下架</td>
                 <td nz-td *ngIf="product.pro_status == 1000" style="color:grey">己删除</td>
+                <td nz-td>{{product.order_index}}</td>
                 <td nz-td style="text-align: right;">
                     <span *ngIf="product.pro_status != 1000">
                     <a (click)="update(product)">更新</a>

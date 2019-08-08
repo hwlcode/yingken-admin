@@ -36,7 +36,8 @@ export class ProductFormComponent implements OnInit {
             code: [0, [Validators.required]],
             unit: ['', [Validators.required]],
             desc: [''],
-            pro_status: [0, [Validators.required]]
+            pro_status: [0, [Validators.required]],
+            order_index: [1, [Validators.required]]
         });
 
         const id = this.routeInfo.snapshot.params['id'];
@@ -58,7 +59,8 @@ export class ProductFormComponent implements OnInit {
                         desc: res['desc'],
                         origin_price: res['origin_price'],
                         origin_price_unit: res['origin_price_unit'],
-                        pro_status: parseInt(res['pro_status'], 10)
+                        pro_status: parseInt(res['pro_status'], 10),
+                        order_index: res['order_index']
                     });
                     this.product = res;
                 }
@@ -115,7 +117,8 @@ export class ProductFormComponent implements OnInit {
             desc: this.formModel.value.desc,
             origin_price: this.formModel.value.origin_price,
             origin_price_unit: this.formModel.value.origin_price_unit,
-            pro_status: this.formModel.value.pro_status
+            pro_status: this.formModel.value.pro_status,
+            order_index: this.formModel.value.order_index
         });
         if (this.formModel.valid && this.formModel.value.banner !== null) {
             const url = '/api/saveProduct';
@@ -140,7 +143,8 @@ export class ProductFormComponent implements OnInit {
             desc: this.formModel.value.desc,
             origin_price: this.formModel.value.origin_price,
             origin_price_unit: this.formModel.value.origin_price_unit,
-            pro_status: this.formModel.value.pro_status
+            pro_status: this.formModel.value.pro_status,
+            order_index: this.formModel.value.order_index
         });
         if (this.formModel.valid && this.formModel.value.banner !== null) {
             const url = '/api/updateProduct/' + product._id;
