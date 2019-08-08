@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "http://localhost:9527",
+        "target": "http://admin.gxyingken.com",
         "secure": false,
         "changeOrigin": true
     }
